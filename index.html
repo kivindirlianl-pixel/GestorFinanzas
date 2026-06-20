@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Control de Finanzas y Compras</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>📊 GestorFinanzas <span class="title-badge">✨ Presupuesto + Compras Inteligentes</span></h1>
+    <div class="sub">Control Mensual • Funciona 100% Sin Internet (Offline)</div>
+
+    <div class="summary-card">
+        <div class="total-box">
+            <div class="total-label">💵 Total Ingresos</div>
+            <div class="total-amount" id="totalIngresos">$0</div>
+        </div>
+        <div class="total-box">
+            <div class="total-label">📉 Total Gastos</div>
+            <div class="total-amount" id="totalGastos">$0</div>
+        </div>
+        <div class="total-box">
+            <div class="total-label">⚖️ Saldo Disponible</div>
+            <div class="total-amount" id="diferenciaTotal">$0</div>
+        </div>
+    </div>
+
+    <div class="card card-presupuesto">
+        <h3 class="card-title">📝 Registrar Movimiento Mensual</h3>
+        <div class="form-row">
+            <input type="text" id="movimientoNombre" placeholder="Concepto (ej. Salario, Arriendo, Transporte)" autocomplete="off">
+            <input type="number" id="movimientoMonto" placeholder="Monto $" step="any">
+            <select id="movimientoTipo">
+                <option value="ingreso">🟢 Ingreso (Salario/Otros)</option>
+                <option value="fijo">🔴 Gasto Fijo del Hogar</option>
+                <option value="no_frecuente">🟡 Gasto No Frecuente</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <button id="btnAgregarMovimiento">➕ Añadir al Presupuesto</button>
+        </div>
+        
+        <div class="filter-bar">
+            <button id="filterAll" class="active-filter">🔍 Todos</button>
+            <button id="filterIngresos">🟢 Ingresos</button>
+            <button id="filterFijos">🔴 Fijos</button>
+            <button id="filterNoFrecuentes">🟡 No Frecuentes</button>
+        </div>
+        
+        <div id="listaMovimientosContainer"></div>
+    </div>
+
+    <div class="card card-compras">
+        <h3>🛒 Lista de Compras Inteligente</h3>
+        <p class="card-subtitle">Chulea los artículos comprados para recalcular el total real.</p>
+        
+        <div class="form-row">
+            <input type="text" id="compraNombre" placeholder="Producto (ej. Arroz, Leche)" autocomplete="off" class="flex-grow-2">
+            <input type="number" id="compraSugerido" placeholder="P. Sugerido $" step="any">
+            <input type="number" id="compraReal" placeholder="P. Real $" step="any">
+        </div>
+        <div class="form-row">
+            <button id="btnAgregarCompra" class="btn-blue">🛍️ Añadir a la Lista</button>
+        </div>
+
+        <div class="filter-bar-shop">
+            <button id="shopFilterAll" class="active-shop-filter">📋 Todos</button>
+            <button id="shopFilterPendientes">⏳ Pendientes</button>
+            <button id="shopFilterComprados">✅ Comprados</button>
+        </div>
+        
+        <div id="listaComprasContainer"></div>
+
+        <div class="shopping-summary">
+            <div>📋 Sugerido Total: <strong id="totalSugerido">$0</strong></div>
+            <div>🛒 Real (Comprado): <strong id="totalReal">$0</strong></div>
+            <div>Diferencia Tienda: <strong id="diferenciaTienda">$0</strong></div>
+        </div>
+        
+        <div class="action-row-right">
+            <button id="vaciarCompras" class="btn-secondary btn-danger btn-padding-sm">🗑️ Vaciar Lista</button>
+        </div>
+    </div>
+
+    <div class="card card-hormiga">
+        <h3>🎯 Identificador de Gastos Hormiga</h3>
+        <p class="card-subtitle">¡Tienes la oportunidad de convertir estos gastos en ahorros!</p>
+        
+        <div class="form-row">
+            <select id="hormigaTipo">
+                <option value="☕ Cafés y bebidas diarias">1. Cafés y bebidas diarias</option>
+                <option value="🍔 Comidas fuera de casa">2. Comidas fuera de casa</option>
+                <option value="🍫 Dulces, snacks y antojos">3. Dulces, snacks y antojos</option>
+                <option value="📺 Suscripciones innecesarias">4. Suscripciones innecesarias</option>
+                <option value="🛍️ Compras impulsivas">5. Compras impulsivas</option>
+                <option value="🎲 Apuestas y juegos de azar">6. Apuestas y juegos de azar</option>
+            </select>
+            <input type="number" id="hormigaMonto" placeholder="Monto estimado $" step="any">
+        </div>
+        <div class="form-row">
+            <button id="btnAgregarHormiga" class="btn-purple">⚡ Registrar Gasto Evitable</button>
+        </div>
+        
+        <div id="listaHormigasContainer"></div>
+        
+        <div class="badge-fuga-total">
+            <span>
+                Total Fuga en Gastos Hormiga: <span id="totalHormiga">$0</span>
+            </span>
+        </div>
+    </div>
+    
+    <footer>Datos guardados localmente • Funciona sin internet</footer>
+</div>
+
+<div id="installBanner" class="install-banner hidden">
+    <span>📲 Instala esta app en tu móvil</span>
+    <button id="btnInstall" class="btn-install-action">Instalar</button>
+</div>
+
+<script src="./js/app.js"></script>
+</body>
+</html>

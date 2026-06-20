@@ -1,0 +1,459 @@
+/* ==========================================================================
+   🎨 CONTROL DE FINANZAS - ESTILOS EVOLUCIONADOS CON ANIMACIONES
+   ========================================================================== */
+
+/* ---------- VARIABLES Y PALETA DE COLORES ---------- */
+:root {
+    --bg-main: #f8fafc;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+    
+    /* Accentos dinámicos */
+    --accent-green: #10b981;
+    --accent-green-hover: #059669;
+    --accent-blue: #3b82f6;
+    --accent-blue-hover: #2563eb;
+    --accent-purple: #8b5cf6;
+    --accent-purple-hover: #7c3aed;
+    --accent-danger: #ef4444;
+    --accent-danger-bg: #fee2e2;
+    
+    /* Sombras y Efectos */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.02);
+    --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-full: 9999px;
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------- CONFIGURACIÓN MODO OSCURO (AUTOMÁTICO) ---------- */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-main: #0b0f19;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --card-bg: #161f30;
+        --card-border: #243249;
+        
+        --accent-green: #34d399;
+        --accent-blue: #60a5fa;
+        --accent-purple: #a78bfa;
+        --accent-danger-bg: #2d191e;
+    }
+}
+
+/* ---------- RESET GENERAL ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    padding: 24px 16px 100px 16px;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 680px;
+    margin: 0 auto;
+    animation: fadeInContainer var(--transition-smooth);
+}
+
+/* ---------- ANIMACIONES NATIVAS (KEYFRAMES) ---------- */
+@keyframes fadeInContainer {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes itemAparicion {
+    from { opacity: 0; transform: scale(0.96) translateY(6px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+/* ---------- ENCABEZADOS Y TEXTOS ---------- */
+h1 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.title-badge {
+    font-size: 0.8rem;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: white;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-weight: 500;
+    box-shadow: var(--shadow-sm);
+}
+
+.sub {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    border-left: 3px solid var(--accent-green);
+    padding-left: 10px;
+}
+
+/* ---------- TARJETAS PRINCIPALES (CARDS) ---------- */
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-md);
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-blue);
+}
+
+.card-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+.card-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+}
+
+/* Bordes decorativos premium por sección */
+.card-presupuesto { border-top: 4px solid var(--accent-green); }
+.card-compras { border-top: 4px solid var(--accent-blue); }
+.card-hormiga { border-top: 4px solid var(--accent-purple); }
+
+/* ---------- PANEL RESUMEN GLOBAL ---------- */
+.summary-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    box-shadow: var(--shadow-md);
+}
+
+.total-box {
+    flex: 1;
+    min-width: 140px;
+}
+
+.total-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+}
+
+.total-amount {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+    transition: color var(--transition-fast);
+}
+
+/* ---------- ENTRADAS DE FORMULARIO (INPUTS Y SELECTS) ---------- */
+input, select {
+    font-size: 0.95rem;
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--card-border);
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: inherit;
+    outline: none;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+input:focus, select:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.form-row input, .form-row select {
+    flex: 1;
+    min-width: 140px;
+}
+
+.flex-grow-2 { flex: 2 !important; }
+
+/* ---------- BOTONES ULTRA-RESPONSIVOS ---------- */
+button {
+    background-color: var(--accent-green);
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 12px 20px;
+    border-radius: var(--radius-full);
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+button:hover {
+    background-color: var(--accent-green-hover);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+.btn-blue { background-color: var(--accent-blue); }
+.btn-blue:hover { background-color: var(--accent-blue-hover); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2); }
+
+.btn-purple { background-color: var(--accent-purple); }
+.btn-purple:hover { background-color: var(--accent-purple-hover); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2); }
+
+.btn-secondary {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    border: 1px solid var(--card-border);
+}
+.btn-secondary:hover {
+    background-color: var(--card-border);
+}
+
+.btn-danger {
+    background-color: var(--accent-danger-bg);
+    color: var(--accent-danger);
+    border: 1px solid transparent;
+}
+.btn-danger:hover {
+    background-color: var(--accent-danger);
+    color: white;
+}
+
+.btn-padding-sm { padding: 8px 16px; font-size: 0.85rem; }
+.action-row-right { margin-top: 14px; display: flex; justify-content: flex-end; }
+
+/* ---------- PESTAÑAS Y FILTROS ---------- */
+.filter-bar, .filter-bar-shop {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+}
+
+.filter-bar button, .filter-bar-shop button {
+    flex: 1;
+    background-color: var(--bg-main);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    padding: 8px 12px;
+    border: 1px solid var(--card-border);
+}
+
+.filter-bar button:hover, .filter-bar-shop button:hover {
+    color: var(--text-main);
+    background-color: var(--card-border);
+}
+
+.active-filter, .active-shop-filter {
+    background-color: var(--text-main) !important;
+    color: var(--card-bg) !important;
+    border-color: var(--text-main) !important;
+}
+
+/* ---------- ELEMENTOS DINÁMICOS DE LAS LISTAS ---------- */
+.expense-item {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+    
+    /* Animación de entrada cuando JS inyecta el elemento */
+    animation: itemAparicion var(--transition-smooth) forwards;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), opacity var(--transition-smooth);
+}
+
+.expense-item:hover {
+    background-color: var(--bg-main);
+}
+
+.item-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.item-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color var(--transition-fast), opacity var(--transition-fast);
+}
+
+/* Interacción de tachado animada */
+.comprado-tached {
+    text-decoration: line-through;
+    opacity: 0.45;
+    color: var(--text-muted);
+}
+
+/* Resumen específico de compras */
+.shopping-summary {
+    background-color: var(--bg-main);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.85rem;
+    border: 1px dashed var(--card-border);
+}
+
+/* Alerta de Gastos Hormiga */
+.badge-fuga-total {
+    background-color: var(--accent-danger-bg);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    margin-top: 14px;
+    text-align: center;
+    border: 1px solid rgba(239, 68, 68, 0.15);
+}
+
+.badge-fuga-total span {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent-danger);
+}
+
+/* Botones de eliminación internos */
+.delete-btn {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    padding: 6px;
+    cursor: pointer;
+    color: var(--text-muted);
+    border-radius: var(--radius-full);
+}
+
+.delete-btn:hover {
+    color: var(--accent-danger);
+    background-color: var(--accent-danger-bg);
+    box-shadow: none;
+}
+
+/* Checkbox personalizado nativo */
+.check-box-custom {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    accent-color: var(--accent-blue);
+    transition: transform var(--transition-fast);
+}
+
+.check-box-custom:progressive-enhancement {
+    transform: scale(1.1);
+}
+
+/* Inputs embebidos en tablas de compras */
+.input-table {
+    border: none;
+    background: transparent;
+    padding: 2px 4px;
+    width: 70px;
+    text-align: right;
+    border-bottom: 1px dashed var(--text-muted);
+    border-radius: 0;
+    font-size: 0.85rem;
+    color: var(--text-main);
+}
+
+.input-table:focus {
+    border-bottom: 2px solid var(--accent-blue);
+    box-shadow: none;
+}
+
+/* ---------- BANNER INSTALACIÓN PWA AUTOMÁTICO ---------- */
+.install-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background-color: #0f172a;
+    color: white;
+    border-radius: var(--radius-full);
+    padding: 14px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    animation: fadeInContainer 0.5s ease-out;
+}
+
+.btn-install-action {
+    background-color: var(--accent-green);
+    padding: 8px 18px;
+    font-size: 0.85rem;
+    animation: pulseGlow 2s infinite;
+}
+
+.hidden { display: none !important; }
+
+/* ---------- FOOTER ---------- */
+footer {
+    text-align: center;
+    font-size: 0.75rem;
+    margin-top: 35px;
+    color: var(--text-muted);
+    font-style: italic;
+}
