@@ -1,42 +1,36 @@
-const CACHE_NAME = 'finanzas-pwa-v1';
+const CACHE_NAME = 'nexroute-finanzas-v1';
 const ASSETS = [
-  './',
-  './index.html',
-  './styles.css',
-  './app.js',
-  './manifest.json'
+    '/',
+    '/index.html',
+    '/dashboard.html',
+    '/css/style.css',
+    '/js/app.js',
+    '/js/auth.js'
 ];
 
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(ASSETS);
-    }).then(() => self.skipWaiting())
-  );
-});
-
-self.addEventListener('activate', e => {
-  e.waitUntil(
-    caches.keys().then(keys => {
-      return Promise.all(
-        keys.map(key => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
+// Instalación: Cachea los recursos esenciales
+self.addEventListener('install', (event) => {
+    event.waitUntil(
+        caches.open(CACHE_NAME).then((cache) => {
+            return cache.addAll(ASSETS);
         })
-      );
-    }).then(() => self.clients.claim())
-  );
+    );
 });
 
-// Estrategia: Buscar primero en Caché, si no hay, ir a la red (Ignorando WebSockets)
-self.addEventListener('fetch', e => {
-  // SOLUCIÓN: Si la petición no es HTTP o HTTPS (como las de ws:// de Live Server), la ignora
-  if (!e.request.url.startsWith('http')) return;
+// Activación: Limpia caches antiguos
+self.addEventListener('activate', (event) => {
+    event.waitUntil(
+        caches.keys().then((keys) => {
+            return Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)));
+        })
+    );
+});
 
-  e.respondWith(
-    caches.match(e.request).then(cachedResponse => {
-      return cachedResponse || fetch(e.request);
-    })
-  );
+// Fetch: Sirve los recursos desde la caché si el usuario está offline
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+        caches.match(event.request).then((response) => {
+            return response || fetch(event.request);
+        })
+    );
 });
