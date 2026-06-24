@@ -23,7 +23,7 @@ body {
     padding: 10px 0;
 }
 h1 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     color: #4a2c1a;
 }
 .badge-offline {
@@ -96,13 +96,15 @@ button:hover {
     padding-bottom: 5px;
 }
 .tab-btn {
-    flex: 1;
     background-color: #f0e4d4;
     color: #7f8c8d;
-    padding: 10px;
-    font-size: 0.85rem;
+    padding: 10px 14px;
+    font-size: 0.8rem;
     border-radius: 8px;
     white-space: nowrap;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
 }
 .tab-btn.active {
     background-color: #4a2c1a;
@@ -132,8 +134,15 @@ button:hover {
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     border: 2px solid #e67e22;
 }
+.modal-card label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #4a2c1a;
+}
 
-/* --- TABLA DE PRESUPUESTO ESTILO FORMATO --- */
+/* --- TABLA DE PRESUPUESTO INTERACTIVA --- */
 .table-presupuesto {
     width: 100%;
     margin-top: 5px;
@@ -170,6 +179,35 @@ button:hover {
     background-color: #e8f8f5 !important;
     font-weight: 600;
 }
+.highlight-deudas {
+    background-color: #fef9e7 !important;
+    font-weight: 600;
+}
+
+/* --- ESTRUCTURA DE FACTURAS Y DEUDAS --- */
+.item-factura-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    background: #fff;
+    border: 1px solid #e1b17d;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+.item-factura-card.pagado {
+    border-left: 6px solid #27ae60;
+    background: #f4fbf7;
+}
+.item-factura-card.pendiente {
+    border-left: 6px solid #e74c3c;
+    background: #fdf5f5;
+}
+.factura-info h4 { font-size: 0.95rem; color: #2c3e50; }
+.factura-info small { color: #7f8c8d; font-size: 0.75rem; }
+.factura-acciones { display: flex; gap: 8px; align-items: center; }
+.btn-check-pago { background: #27ae60; padding: 6px 12px; font-size: 0.8rem; border-radius: 6px; }
+.btn-check-pago.uncheck { background: #f39c12; }
 
 /* --- CONTENEDORES DE LISTAS --- */
 .productos-grid {
