@@ -3,122 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>Control de Finanzas y Compras</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="theme-color" content="#D35400">
+    <title>Control de Finanzas Personales</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
+<!-- Modal de Registro Inicial (Onboarding) -->
+<div id="modalOnboarding" class="modal-overlay hidden">
+    <div class="modal-card">
+        <h2>👋 ¡Bienvenido a tu Control Financiero!</h2>
+        <p>Configura tu perfil para empezar a recuperar el control de tus finanzas.</p>
+        <div class="form-group">
+            <label>Nombre Completo:</label>
+            <input type="text" id="userNombre" placeholder="Ej. Kivin López">
+        </div>
+        <div class="form-group">
+            <label>Número de Teléfono:</label>
+            <input type="tel" id="userTelefono" placeholder="Ej. 3123456789">
+        </div>
+        <div class="form-group">
+            <label>Periodo de Presupuesto:</label>
+            <select id="userPeriodo">
+                <option value="mensual">Mensual (Valor Mensual)</option>
+                <option value="quincenal">Quincenal (Valor Quincenal)</option>
+            </select>
+        </div>
+        <button id="btnGuardarPerfil" style="width: 100%;">Comenzar Planificación</button>
+    </div>
+</div>
+
 <div class="container">
-    <h1>📊 GestorFinanzas <span class="title-badge">✨ Presupuesto + Compras Inteligentes</span></h1>
-    <div class="sub">Control Mensual • Funciona 100% Sin Internet (Offline)</div>
+    <div class="header">
+        <h1 id="saludoUsuario">📊 Mis Finanzas</h1>
+        <div class="badge-offline" id="badgePeriodo">Periodo: Mensual</div>
+    </div>
 
-    <div class="summary-card">
-        <div class="total-box">
-            <div class="total-label">💵 Total Ingresos</div>
-            <div class="total-amount" id="totalIngresos">$0</div>
+    <!-- Pestañas de Navegación -->
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="presupuesto">📋 Presupuesto</button>
+        <button class="tab-btn" data-tab="mercado">🛒 Lista Mercado</button>
+        <button class="tab-btn" data-tab="gastos">💸 Otros Gastos</button>
+        <button class="tab-btn" data-tab="reportes">📊 Balance</button>
+    </div>
+
+    <!-- Panel Presupuesto (Estructura basada en el formato físico) -->
+    <div id="tab-presupuesto" class="tab-content">
+        <div class="card">
+            <h2>💰 Registrar Ingresos</h2>
+            <div class="form-group">
+                <select id="ingresoCategoria">
+                    <option value="Salario/honorarios">Salario / Honorarios</option>
+                    <option value="Otros ingresos">Otros ingresos</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="number" id="ingresoMonto" placeholder="Monto $">
+            </div>
+            <button id="btnRegistrarIngreso" style="width:100%">➕ Agregar Ingreso</button>
         </div>
-        <div class="total-box">
-            <div class="total-label">📉 Total Gastos</div>
-            <div class="total-amount" id="totalGastos">$0</div>
-        </div>
-        <div class="total-box">
-            <div class="total-label">⚖️ Saldo Disponible</div>
-            <div class="total-amount" id="diferenciaTotal">$0</div>
+
+        <!-- Tabla Interactiva -->
+        <div class="card">
+            <h2>📊 Resumen de Presupuesto (<span class="txt-periodo">Mensual</span>)</h2>
+            <div class="table-presupuesto">
+                <div class="table-row table-header-green">
+                    <span>INGRESOS</span>
+                    <span id="txtTotalIngresos">$0.00</span>
+                </div>
+                <div id="listaIngresosDetalle"></div>
+
+                <div class="table-row table-header-green" style="margin-top: 15px;">
+                    <span>GASTOS FIJOS DEL HOGAR</span>
+                    <span id="txtTotalFijos">$0.00</span>
+                </div>
+                <div class="table-row-item"><span>Arriendo</span> <span id="val-Arriendo">$0.00</span></div>
+                <div class="table-row-item highlight-auto"><span>Alimentación (Mercado) 🔄</span> <span id="val-Alimentacion">$0.00</span></div>
+                <div class="table-row-item"><span>Servicios públicos</span> <span id="val-Servicios">$0.00</span></div>
+                <div class="table-row-item"><span>Transporte</span> <span id="val-Transporte">$0.00</span></div>
+                <div class="table-row-item"><span>Educación</span> <span id="val-Educacion">$0.00</span></div>
+                <div class="table-row-item"><span>Pago de deudas</span> <span id="val-Deudas">$0.00</span></div>
+                <div class="table-row-item"><span>Cuota ahorro</span> <span id="val-Ahorro">$0.00</span></div>
+                <div class="table-row-item"><span>Mascota</span> <span id="val-Mascota">$0.00</span></div>
+                <div class="table-row-item"><span>Otros Fijos</span> <span id="val-OtrosFijos">$0.00</span></div>
+
+                <div class="table-row table-header-green" style="margin-top: 15px;">
+                    <span>GASTOS NO FRECUENTES</span>
+                    <span id="txtTotalNoFrecuentes">$0.00</span>
+                </div>
+                <div class="table-row-item"><span>Visitas médicas</span> <span id="val-Medicas">$0.00</span></div>
+                <div class="table-row-item"><span>Impuestos</span> <span id="val-Impuestos">$0.00</span></div>
+                <div class="table-row-item"><span>Salidas familiares</span> <span id="val-Salidas">$0.00</span></div>
+                <div class="table-row-item"><span>Deporte</span> <span id="val-Deporte">$0.00</span></div>
+                <div class="table-row-item"><span>Otros No Frecuentes</span> <span id="val-OtrosNoFrecuentes">$0.00</span></div>
+
+                <div class="table-row table-footer-total" style="margin-top: 20px;">
+                    <span>INGRESOS MENOS GASTOS</span>
+                    <span id="txtBalanceNeto">$0.00</span>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="card card-presupuesto">
-        <h3 class="card-title">📝 Registrar Movimiento Mensual</h3>
-        <div class="form-row">
-            <input type="text" id="movimientoNombre" placeholder="Concepto (ej. Salario, Arriendo, Transporte)" autocomplete="off">
-            <input type="number" id="movimientoMonto" placeholder="Monto $" step="any">
-            <select id="movimientoTipo">
-                <option value="ingreso">🟢 Ingreso (Salario/Otros)</option>
-                <option value="fijo">🔴 Gasto Fijo del Hogar</option>
-                <option value="no_frecuente">🟡 Gasto No Frecuente</option>
-            </select>
-        </div>
-        <div class="form-row">
-            <button id="btnAgregarMovimiento">➕ Añadir al Presupuesto</button>
-        </div>
-        
-        <div class="filter-bar">
-            <button id="filterAll" class="active-filter">🔍 Todos</button>
-            <button id="filterIngresos">🟢 Ingresos</button>
-            <button id="filterFijos">🔴 Fijos</button>
-            <button id="filterNoFrecuentes">🟡 No Frecuentes</button>
-        </div>
-        
-        <div id="listaMovimientosContainer"></div>
-    </div>
-
-    <div class="card card-compras">
-        <h3>🛒 Lista de Compras Inteligente</h3>
-        <p class="card-subtitle">Chulea los artículos comprados para recalcular el total real.</p>
-        
-        <div class="form-row">
-            <input type="text" id="compraNombre" placeholder="Producto (ej. Arroz, Leche)" autocomplete="off" class="flex-grow-2">
-            <input type="number" id="compraSugerido" placeholder="P. Sugerido $" step="any">
-            <input type="number" id="compraReal" placeholder="P. Real $" step="any">
-        </div>
-        <div class="form-row">
-            <button id="btnAgregarCompra" class="btn-blue">🛍️ Añadir a la Lista</button>
+    <!-- Panel Lista Mercado (Automatizado) -->
+    <div id="tab-mercado" class="tab-content" style="display:none;">
+        <div class="card">
+            <h2>🛒 Planificar Lista de Mercado</h2>
+            <p style="font-size: 0.85rem; margin-bottom: 12px; color: #7f8c8d;">Los artículos que ingreses aquí se sumarán automáticamente al gasto de <strong>Alimentación</strong> en el presupuesto.</p>
+            <div class="form-group"><input type="text" id="itemMercadoNombre" placeholder="Artículo (ej. Harina, Carne, Arroz)"></div>
+            <div class="form-group"><input type="number" id="itemMercadoPrecio" placeholder="Precio Estimado u Real $"></div>
+            <button id="btnAgregarMercado" style="width: 100%;">🛒 Añadir a la Lista</button>
         </div>
 
-        <div class="filter-bar-shop">
-            <button id="shopFilterAll" class="active-shop-filter">📋 Todos</button>
-            <button id="shopFilterPendientes">⏳ Pendientes</button>
-            <button id="shopFilterComprados">✅ Comprados</button>
-        </div>
-        
-        <div id="listaComprasContainer"></div>
-
-        <div class="shopping-summary">
-            <div>📋 Sugerido Total: <strong id="totalSugerido">$0</strong></div>
-            <div>🛒 Real (Comprado): <strong id="totalReal">$0</strong></div>
-            <div>Diferencia Tienda: <strong id="diferenciaTienda">$0</strong></div>
-        </div>
-        
-        <div class="action-row-right">
-            <button id="vaciarCompras" class="btn-secondary btn-danger btn-padding-sm">🗑️ Vaciar Lista</button>
+        <div class="card">
+            <h2>📋 Artículos en la Lista</h2>
+            <div id="listaMercadoContainer" class="productos-grid"></div>
         </div>
     </div>
 
-    <div class="card card-hormiga">
-        <h3>🎯 Identificador de Gastos Hormiga</h3>
-        <p class="card-subtitle">¡Tienes la oportunidad de convertir estos gastos en ahorros!</p>
-        
-        <div class="form-row">
-            <select id="hormigaTipo">
-                <option value="☕ Cafés y bebidas diarias">1. Cafés y bebidas diarias</option>
-                <option value="🍔 Comidas fuera de casa">2. Comidas fuera de casa</option>
-                <option value="🍫 Dulces, snacks y antojos">3. Dulces, snacks y antojos</option>
-                <option value="📺 Suscripciones innecesarias">4. Suscripciones innecesarias</option>
-                <option value="🛍️ Compras impulsivas">5. Compras impulsivas</option>
-                <option value="🎲 Apuestas y juegos de azar">6. Apuestas y juegos de azar</option>
-            </select>
-            <input type="number" id="hormigaMonto" placeholder="Monto estimado $" step="any">
+    <!-- Panel Otros Gastos -->
+    <div id="tab-gastos" class="tab-content" style="display:none;">
+        <div class="card">
+            <h2>💸 Registrar Gasto del Hogar / Personal</h2>
+            <div class="form-group"><input type="text" id="gastoConcepto" placeholder="Detalle (ej. Recibo de luz, Concentrado gato)"></div>
+            <div class="form-group"><input type="number" id="gastoMonto" placeholder="Monto $"></div>
+            <div class="form-group">
+                <select id="gastoCategoria">
+                    <optgroup label="Gastos Fijos del Hogar">
+                        <option value="Arriendo">Arriendo</option>
+                        <option value="Servicios públicos">Servicios públicos</option>
+                        <option value="Transporte">Transporte</option>
+                        <option value="Educación">Educación</option>
+                        <option value="Pago de deudas">Pago de deudas</option>
+                        <option value="Cuota ahorro">Cuota ahorro</option>
+                        <option value="Mascota">Mascota</option>
+                        <option value="Otros Fijos">Otros Fijos</option>
+                    </optgroup>
+                    <optgroup label="Gastos No Frecuentes">
+                        <option value="Visitas médicas">Visitas médicas</option>
+                        <option value="Impuestos">Impuestos</option>
+                        <option value="Salidas familiares">Salidas familiares</option>
+                        <option value="Deporte">Deporte</option>
+                        <option value="Otros No Frecuentes">Otros No Frecuentes</option>
+                    </optgroup>
+                </select>
+            </div>
+            <button id="btnAgregarGasto" style="width: 100%;">📌 Registrar Gasto</button>
         </div>
-        <div class="form-row">
-            <button id="btnAgregarHormiga" class="btn-purple">⚡ Registrar Gasto Evitable</button>
-        </div>
-        
-        <div id="listaHormigasContainer"></div>
-        
-        <div class="badge-fuga-total">
-            <span>
-                Total Fuga en Gastos Hormiga: <span id="totalHormiga">$0</span>
-            </span>
+
+        <div class="card">
+            <h2>📜 Historial General de Egresos</h2>
+            <div id="listaGastosContainer"></div>
         </div>
     </div>
-    
-    <footer>Datos guardados localmente • Funciona sin internet</footer>
+
+    <!-- Panel Balance y Consejos -->
+    <div id="tab-reportes" class="tab-content" style="display:none;">
+        <div class="card">
+            <h2>📈 Oportunidad de Ahorro</h2>
+            <p style="margin-bottom: 15px;">Tienes la oportunidad de convertir estos gastos comunes en ahorros:</p>
+            <div class="consejos-grid">
+                <div class="consejo-item"><span>1</span> Cafés y bebidas diarias.</div>
+                <div class="consejo-item"><span>2</span> Comidas fuera de casa.</div>
+                <div class="consejo-item"><span>3</span> Dulces, snacks y antojos.</div>
+                <div class="consejo-item"><span>4</span> Suscripciones innecesarias.</div>
+                <div class="consejo-item"><span>5</span> Compras impulsivas.</div>
+                <div class="consejo-item"><span>6</span> Apuestas y juegos de azar.</div>
+            </div>
+            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #f0d5b0;">
+            <button id="btnExportarDatos" class="btn-secondary" style="width: 100%;">📎 Exportar Datos (CSV)</button>
+            <button id="btnResetDemo" class="btn-danger" style="margin-top:10px; width: 100%;">⚠️ Reiniciar Sistema</button>
+        </div>
+    </div>
+    <footer>Sistema de Finanzas Personales • Almacenamiento Seguro Local</footer>
 </div>
 
-<div id="installBanner" class="install-banner hidden">
-    <span>📲 Instala esta app en tu móvil</span>
-    <button id="btnInstall" class="btn-install-action">Instalar</button>
+<!-- Alerta Flotante de Instalación PWA -->
+<div id="alertaInstalacion" class="alerta-pwa hidden">
+    <div class="alerta-pwa-contenido">
+        <span>📱 ¡Descarga esta App en tu celular para usarla sin internet!</span>
+        <div class="alerta-pwa-botones">
+            <button id="btnInstalarApp" class="btn-instalar-pwa">Instalar</button>
+            <button id="btnCerrarAlertaPWA" class="btn-cerrar-pwa">Luego</button>
+        </div>
+    </div>
 </div>
 
-<script src="js/app.js"></script>
+<script src="js/script.js"></script>
 </body>
 </html>
